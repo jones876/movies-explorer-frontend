@@ -1,0 +1,147 @@
+.filmcard {
+  margin: 0;
+  padding: 0;
+  max-width: 360px;
+  position: relative;
+}
+
+.filmcard__image {
+  width: 360px;
+  height: 201px;
+  border-radius: 5px;
+}
+
+.filmcard__description {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 14px;
+  padding-top: 10px;
+}
+
+.filmcard__title {
+  margin: 0;
+  padding: 0;
+  color: #FFF;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: left;
+}
+
+.filmcard__duration {
+  margin: 0;
+  padding: 0;
+  color: #8B8B8B;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px;
+  border-radius: 3px;
+  background: #2F2F2F;
+  width: 52px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.card__button {
+  position: absolute;
+  top: 15px;
+  right: 14px;
+  background: transparent;
+}
+
+.card__button_inactive {
+  background-image: url('../../images/save3d.svg');
+  width: 72px;
+  height: 21px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+.card__button:hover {
+
+  opacity: 0.8;
+  transition: all 0.3s ease-out;
+}
+
+.card__button:focus {
+  outline: none;
+}
+
+.card__button_active {
+  background-image: url("../../images/saved.svg");
+  height: 21px;
+  width: 21px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  ;
+}
+
+.card__button_delete {
+  background-image: url("../../images/d3.svg");
+  width: 21px;
+  height: 21px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  border: none;
+  cursor: pointer;
+}
+
+.card__button_delete:hover {
+
+  opacity: 0.4;
+  transition: opacity 0.5s ease-out;
+}
+
+
+@media screen and (max-width: 840px) {
+  .filmcard__image {
+    width: 339px;
+    height: 190px;
+  }
+
+  .filmcard__description {
+    padding: 0;
+    padding-top: 20px;
+  }
+
+  .filmcard {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .filmcard__image {
+    width: 300px;
+    height: 168px;
+  }
+
+  .filmcard__title {
+    font-size: 12px;
+  }
+
+  .filmcard__description {
+    padding-top: 12px;
+  }
+
+}

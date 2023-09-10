@@ -1,0 +1,145 @@
+.popup {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.4s;
+}
+
+.popup_opened {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 2;
+}
+
+.popup__container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 68%;
+  height: 100%;
+  padding: 159px 0 92px 0;
+  background: #202020;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.popup__link {
+  font-size: 18px;
+  line-height: 1.21;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 22px;
+  height: 26px;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.popup__link_current {
+  border-bottom: 2px solid #fff;
+}
+
+.popup__link:hover {
+  opacity: 0.7;
+  transition: opacity 0.5s ease-out;
+}
+
+.popup__link-account {
+  font-size: 14px;
+  line-height: 1.14;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: flex-end;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  flex-grow: 1;
+}
+
+.popup__link-account:hover {
+  opacity: 0.7;
+  transition: opacity 0.5s ease-out;
+}
+
+.popup__link-text {
+  margin-right: 17px;
+  padding: 8px 0;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.popup__pic {
+  padding: 8px 7px;
+  background: #313131;
+  border-radius: 4px;
+}
+
+.popup__btn-close {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  background: #222;
+  background-image: url("../../images/Group.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  cursor: pointer;
+}
+
+.popup__btn-close:hover {
+  opacity: 0.7;
+  transition: opacity 0.5s ease-out;
+}
+
+.popup__link-btn {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: #313131;
+  margin-top: 595px;
+}
+
+@media screen and (max-width: 540px) {
+  .popup__container {
+    width: 100%;
+  }
+
+  .popup__btn-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .popup__container {
+    padding-top: 144px;
+  }
+
+  .popup__link {
+    margin-bottom: 24px;
+  }
+
+  .popup__link-btn {
+    margin-top: 405px;
+  }
+}
