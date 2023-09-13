@@ -4,12 +4,12 @@ import './Register.css';
 
 function Register() {
   return (
-    <section className='register'>
+    <main className='register'>
       <div className='register__container'>
         <Link to='/'>
-          <img src={logo} alt='Логотип пректа' className='header__logo' />
+          <img src={logo} alt='Логотип проекта' className='register__logo' />
         </Link>
-        <h2 className='register__title'>Добро пожаловать!</h2>
+        <h1 className='register__title'>Добро пожаловать!</h1>
 
         <form className='register__form' name='register'>
           <fieldset className='register__form-fieldset'>
@@ -68,7 +68,7 @@ function Register() {
           </div>
         </form>
       </div>
-    </section>
+    </main>
   );
 }
 export default Register;

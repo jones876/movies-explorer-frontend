@@ -4,7 +4,6 @@ function AboutMe() {
   return (
     <section className='about-me' id='about-me'>
       <h2 className='about-me__title'>Студент</h2>
-      <div className='about-me__line'></div>
       <div className='about-me__wrapper'>
         <div className='about-me__info'>
           <h3 className='about-me__name'>Евгений</h3>
@@ -25,7 +24,7 @@ function AboutMe() {
             Github
           </a>
         </div>
-        <img className='about-me__image' src={avatar} alt='моя фотка'></img>
+        <img className='about-me__image' src={avatar} alt='Фотография студента'></img>
       </div>
     </section>
   );

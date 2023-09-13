@@ -52,14 +52,11 @@
     padding: 15px 0;
     outline: none;
     border: none;
-
 }
 
-.profile__line {
-    width: 410px;
-    height: 1px;
-    background-color: #424242;
-}
+
+
+
 
 .profile__wrap {
     margin: 0;
@@ -96,6 +93,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    text-decoration: none;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -106,6 +104,16 @@
 .profile__btn-out:hover {
     opacity: 0.6;
     transition: opacity 0.5s ease-out;
+}
+
+.profile__input-container {
+    border: none;
+    border-bottom: 1px solid #424242;
+}
+
+.profile__input-container:last-child {
+
+    border: none;
 }
 
 @media screen and (max-width: 840px) {
@@ -119,6 +127,10 @@
 
     .profile__wrap {
         margin-top: 195px;
+    }
+
+    .profile__input {
+        padding: 16px 0;
     }
 }
 

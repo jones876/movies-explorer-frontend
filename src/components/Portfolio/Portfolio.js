@@ -4,7 +4,7 @@ function Portfolio() {
     <section className='portfolio'>
       <h2 className='portfolio__title'>Портфолио</h2>
       <ul className='portfolio__list'>
-        <li>
+        <li className='portfolio__list-item'>
           <a
             className='portfolio__link'
             target='_blank'
@@ -15,8 +15,8 @@ function Portfolio() {
             <p className='portfolio__arr'>↗</p>
           </a>
         </li>
-        <div className='portfolio__line'></div>
-        <li>
+
+        <li className='portfolio__list-item'>
           <a
             className='portfolio__link'
             target='_blank'
@@ -27,8 +27,8 @@ function Portfolio() {
             <p className='portfolio__arr'>↗</p>
           </a>
         </li>
-        <div className='portfolio__line'></div>
-        <li>
+
+        <li className='portfolio__list-item'>
           <a
             className='portfolio__link'
             target='_blank'

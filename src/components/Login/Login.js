@@ -3,10 +3,10 @@ import logo from '../../images/logo.svg';
 import './Login.css';
 function Login() {
   return (
-    <section className='register'>
+    <main className='register'>
       <div className='register__container'>
         <Link to='/'>
-          <img src={logo} alt='Логотип пректа' className='header__logo' />
+          <img src={logo} alt='Логотип проекта' className='register__logo' />
         </Link>
         <h2 className='register__title'>Рады видеть!</h2>
 
@@ -42,7 +42,7 @@ function Login() {
             </div>
           </fieldset>
 
-          <button className='register__button login__button'>Войти</button>
+          <button className='register__button register__login-button' type='submit'>Войти</button>
           <div className='register__wrap'>
             <p className='register__wrap-text'>Ещё не зарегистрированы?</p>
             <Link to='/signup' className='register__wrap-link'>
@@ -51,7 +51,7 @@ function Login() {
           </div>
         </form>
       </div>
-    </section>
+    </main>
   );
 }
 export default Login;

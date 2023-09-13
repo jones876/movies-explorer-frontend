@@ -14,14 +14,11 @@
     line-height: normal;
     letter-spacing: -0.88px;
     padding-top: 100px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #dadada;
 }
 
-.techs__line {
-    max-width: 1140px;
-    height: 1px;
-    background-color: #DADADA;
-    margin-top: 23px;
-}
+
 
 .techs__info {
     display: flex;
@@ -94,6 +91,7 @@
 
     .techs__title {
         padding-top: 90px;
+        padding-bottom: 28px;
     }
 
     .techs__info {
@@ -125,6 +123,7 @@
     .techs {
         padding: 0 18px 0 18px;
         background-color: #202020;
+        margin-top: 65px;
     }
 
     .techs__title {

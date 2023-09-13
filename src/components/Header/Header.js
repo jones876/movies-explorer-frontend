@@ -7,7 +7,7 @@ function Header() {
     <header className='header'>
       <div className='header__container'>
         <Link to='/'>
-          <img src={logo} alt='Логотип пректа' className='header__logo' />
+          <img src={logo} alt='Логотип проекта' className='header__logo' />
         </Link>
         <nav className='header__nav'>
           <Link to='/signup' className='header__signup-btn'>

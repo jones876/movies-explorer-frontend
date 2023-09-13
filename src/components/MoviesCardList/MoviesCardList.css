@@ -2,11 +2,10 @@
   margin: 0 auto;
   padding: 0;
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, 360px);
   grid-column-gap: 30px;
   grid-row-gap: 57px;
-
+  justify-content: center;
   padding: 0 70px;
 
 }
@@ -14,7 +13,6 @@
 .cards__button {
   margin: 0;
   padding: 0;
-
   width: 320px;
   height: 36px;
   border-radius: 6px;
@@ -52,7 +50,7 @@
 @media screen and (max-width: 840px) {
   .cards__list {
     padding: 0 30px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, 339px);
     grid-row-gap: 40px;
   }
 
@@ -60,22 +58,19 @@
     margin-top: 52px;
   }
 
-  .cards {
-    margin-bottom: 10px;
-  }
 }
 
 @media screen and (max-width: 540px) {
   .cards__list {
     padding: 0 10px;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(auto-fill, 300px);
     gap: 25px;
 
   }
 
   .cards {
     padding-top: 50px;
-    padding-bottom: 10px;
+
   }
 
   .cards__button {

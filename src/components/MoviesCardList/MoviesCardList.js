@@ -14,9 +14,8 @@ function MoviesCardList({ cards }) {
       <div className='cards__button-container'>
         <button
           type='button'
-          className={`cards__button cards__button_${
-            location.pathname === '/saved-movies' ? 'saved' : ''
-          }`}
+          className={`cards__button cards__button_${location.pathname === '/saved-movies' ? 'saved' : ''
+            }`}
         >
           Ещё
         </button>

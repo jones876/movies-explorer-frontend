@@ -9,27 +9,26 @@ function MoviesCard({ card }) {
   }
   const { pathname } = useLocation();
   return (
-    <div className='filmcard'>
-      <img src={filmImg} className='filmcard__image' alt='Обложка фильма' />
-      <div className='card__buttons'>
+    <li className='filmcard'>
+      <img src={filmImg} className='filmcard__image' alt={card.title} />
+      <div className='filmcard__buttons'>
         {pathname === '/saved-movies' ? (
-          <button type='button' className='card__button card__button_delete' />
+          <button type='button' className='filmcard__button filmcard__button_delete' />
         ) : (
           <button
             type='button'
-            className={`card__button card__button${
-              like ? '_active' : '_inactive'
-            }`}
+            className={`filmcard__button filmcard__button${like ? '_active' : '_inactive'
+              }`}
             onClick={handleLikeToogle}
           />
         )}
       </div>
       <div className='filmcard__description'>
-        <h3 className='filmcard__title'>{card.title}</h3>
+        <h2 className='filmcard__title'>{card.title}</h2>
 
         <p className='filmcard__duration'>{card.duration}</p>
       </div>
-    </div>
+    </li>
   );
 }
 export default MoviesCard;

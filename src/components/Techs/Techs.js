@@ -3,7 +3,6 @@ function Techs() {
   return (
     <section id='techs' className='techs'>
       <h2 className='techs__title'>Технологии</h2>
-      <div className='techs__line'></div>
       <div className='techs__info'>
         <h3 className='techs__subtitle'>7 технологий</h3>
         <p className='techs__text'>

@@ -52,14 +52,14 @@
 }
 
 
-.card__button {
+.filmcard__button {
   position: absolute;
   top: 15px;
   right: 14px;
   background: transparent;
 }
 
-.card__button_inactive {
+.filmcard__button_inactive {
   background-image: url('../../images/save3d.svg');
   width: 72px;
   height: 21px;
@@ -72,17 +72,17 @@
   cursor: pointer;
 }
 
-.card__button:hover {
+.filmcard__button:hover {
 
   opacity: 0.8;
   transition: all 0.3s ease-out;
 }
 
-.card__button:focus {
+.filmcard__button:focus {
   outline: none;
 }
 
-.card__button_active {
+.filmcard__button_active {
   background-image: url("../../images/saved.svg");
   height: 21px;
   width: 21px;
@@ -94,7 +94,7 @@
   ;
 }
 
-.card__button_delete {
+.filmcard__button_delete {
   background-image: url("../../images/d3.svg");
   width: 21px;
   height: 21px;
@@ -107,7 +107,7 @@
   cursor: pointer;
 }
 
-.card__button_delete:hover {
+.filmcard__button_delete:hover {
 
   opacity: 0.4;
   transition: opacity 0.5s ease-out;

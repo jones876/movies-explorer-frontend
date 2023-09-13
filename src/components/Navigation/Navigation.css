@@ -33,7 +33,7 @@
   font-weight: 500;
 }
 
-.navigation__link-btn {
+.header__link-btn {
   margin: 0;
   padding: 0;
   text-decoration: none;
@@ -50,12 +50,12 @@
   transition: opacity 0.5s ease-out;
 }
 
-.navigation__link-btn:hover {
+.header__link-btn:hover {
   opacity: 0.6;
   transition: opacity 0.5s ease-out;
 }
 
-.navigation__popup-button {
+.header__button {
   display: none;
   background: #222;
   background-image: url("../../images/icon__COLOR_icon-main.svg");
@@ -72,22 +72,28 @@
   cursor: pointer;
 }
 
+.header__button:hover {
+  opacity: 0.6;
+  transition: opacity 0.5s ease-out;
+}
+
 @media screen and (max-width: 840px) {
   .navigation__link {
     display: none;
   }
 
-  .navigation__link-btn {
+  .header__link-btn {
     display: none;
   }
 
-  .navigation__popup-button {
+
+  .header__button {
     display: block;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .navigation__popup-button {
+  .header__button {
     width: 36px;
     height: 36px;
   }

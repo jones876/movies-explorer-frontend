@@ -42,6 +42,13 @@
     line-height: normal;
     text-decoration: none;
     margin-top: 184px;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+.pnf__link:hover {
+    opacity: 0.6;
+    transition: opacity 0.5s ease-out;
 }
 
 @media screen and (max-width: 840px) {

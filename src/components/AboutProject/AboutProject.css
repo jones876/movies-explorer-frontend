@@ -12,16 +12,13 @@
     line-height: normal;
     letter-spacing: -0.88px;
     margin-top: 110px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #dadada;
 }
 
-.about-project__line {
-    max-width: 1140px;
-    height: 1px;
-    background-color: #DADADA;
-    margin-top: 23px;
-}
 
-.about_project__info {
+
+.about-project__info {
     margin: 0;
     display: flex;
     gap: 40px;
@@ -48,7 +45,7 @@
     margin-top: 26px;
 }
 
-.about_project__info-item {
+.abou-_project__item {
     max-width: 550px;
 }
 
@@ -146,13 +143,12 @@
         font-size: 18px;
         line-height: normal;
         letter-spacing: -0.72px;
+        padding-bottom: 28px;
     }
 
-    .about-project__line {
-        margin-top: 28px;
-    }
 
-    .about_project__info {
+
+    .about-project__info {
         flex-direction: column;
         margin-top: 60px;
         gap: 58px;
@@ -186,7 +182,6 @@
 
     .about-project__tasks {
         margin-top: 10px;
-        padding-bottom: 69px;
     }
 
     .about-project__back {

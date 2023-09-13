@@ -3,12 +3,6 @@
     padding: 0 70px 0 70px;
 }
 
-.about-me__line {
-    max-width: 1140px;
-    height: 1px;
-    background-color: #DADADA;
-    margin-top: 23px;
-}
 
 .about-me__title {
     margin: 0;
@@ -20,6 +14,8 @@
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.88px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #dadada;
 }
 
 .about-me__wrapper {
@@ -143,6 +139,8 @@
         line-height: normal;
         letter-spacing: -0.72px;
         margin-top: 70px;
+
+        padding-bottom: 28px;
     }
 
     .about-me__line {

@@ -18,11 +18,11 @@ function Navigation() {
           Сохранённые фильмы
         </Link>
       </nav>
-      <Link to='/profile' className='navigation__link-btn'>
+      <Link to='/profile' className='header__link-btn'>
         Аккаунт
       </Link>
       <button
-        className='navigation__popup-button'
+        className='header__button'
         onClick={handleClick}
       ></button>
     </>

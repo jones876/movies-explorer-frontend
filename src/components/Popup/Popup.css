@@ -27,6 +27,9 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+margin-top: 0;
+  list-style-type: none;
+  gap: 28px;
 }
 
 .popup__link {
@@ -118,7 +121,17 @@
   padding: 8px 20px;
   border-radius: 20px;
   background: #313131;
-  margin-top: 595px;
+  /* margin-top: 595px; */
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+
+  position: absolute;
+  top: 900px;
+  right: 210px;
+}
+.popup__link-btn:hover{
+  opacity: 0.6;
+  transition: opacity 0.5s ease-out;
 }
 
 @media screen and (max-width: 540px) {
@@ -127,12 +140,13 @@
   }
 
   .popup__btn-close {
-    top: 12px;
+    top: 15px;
     right: 12px;
   }
 
   .popup__container {
     padding-top: 144px;
+    gap: 25px;
   }
 
   .popup__link {
@@ -140,6 +154,7 @@
   }
 
   .popup__link-btn {
-    margin-top: 405px;
+    top: 705px;
+    right: 110px;
   }
 }

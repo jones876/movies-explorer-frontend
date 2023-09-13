@@ -9,34 +9,43 @@ function Popup() {
   }
   return (
     <nav className='popup'>
-      <div className='popup__container'>
-        <Link to='/' className='popup__link' onClick={handleClick}>
-          Главная
-        </Link>
-        <Link
-          to='/movies'
-          className={`popup__link ${
-            location === '/movies' && 'popup__link_current'
-          }`}
-          onClick={handleClick}
-        >
-          Фильмы
-        </Link>
-        <Link
-          to='/saved-movies'
-          className={`popup__link ${
-            location === '/saved-movies' && 'popup__link_current'
-          }`}
-          onClick={handleClick}
-        >
-          Сохранённые фильмы
-        </Link>
+      <ul className='popup__container'>
+        <li>
+          <Link to='/' className='popup__link' onClick={handleClick}>
+            Главная
+          </Link>
+        </li>
+        <li>
+          <Link
+            to='/movies'
+            className={`popup__link ${location === '/movies' && 'popup__link_current'
+              }`}
+            onClick={handleClick}
+          >
+            Фильмы
+          </Link>
+        </li>
+        <li>
+          <Link
+            to='/saved-movies'
+            className={`popup__link ${location === '/saved-movies' && 'popup__link_current'
+              }`}
+            onClick={handleClick}
+          >
+            Сохранённые фильмы
+          </Link>
+        </li>
+        <li>
+          <Link to='/profile' className='popup__link-btn' onClick={handleClick}>
+            Аккаунт
+          </Link>
+        </li>
 
-        <Link to='/profile' className='popup__link-btn'>
-          Аккаунт
-        </Link>
-        <button className='popup__btn-close' onClick={handleClick} />
-      </div>
+
+      </ul>
+
+
+      <button className='popup__btn-close' type='button' onClick={handleClick} />
     </nav>
   );
 }
