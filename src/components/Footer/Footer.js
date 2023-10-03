@@ -5,7 +5,7 @@ function Footer() {
       <p className='footer__description'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </p>
-      {/* <div className='footer__line'></div> */}
+
       <nav className='footer__nav'>
         <p className='footer__copy'>&copy; 2023</p>
         <ul className='footer__nav-list'>

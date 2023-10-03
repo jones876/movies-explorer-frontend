@@ -1,16 +1,1 @@
-.cards__button_saved{
-    display: none;
-}
-.saved{
-    padding-bottom: 140px;
-}
-@media screen and (max-width: 840px){
-.saved{
-    padding-bottom: 87px;
-}
-}
-@media screen and (max-width: 540px){
-    .saved{
-        padding-bottom: 65px;
-    }
-    }   
+

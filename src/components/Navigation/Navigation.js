@@ -21,10 +21,7 @@ function Navigation() {
       <Link to='/profile' className='header__link-btn'>
         Аккаунт
       </Link>
-      <button
-        className='header__button'
-        onClick={handleClick}
-      ></button>
+      <button className='header__button' onClick={handleClick}></button>
     </>
   );
 }

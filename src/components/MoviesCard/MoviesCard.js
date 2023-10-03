@@ -1,32 +1,67 @@
 import './MoviesCard.css';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import filmImg from '../../images/pic__COLOR_pic.jpg';
-function MoviesCard({ card }) {
-  const [like, setLike] = React.useState(false);
-  function handleLikeToogle() {
-    setLike(!like);
+function MoviesCard({ movie, savedMovies, saveUserMovie, deleteUserMovie }) {
+  const savedMovie = Array.isArray(savedMovies)
+    ? savedMovies.find((i) => i.movieId === movie.id)
+    : null;
+  const location = useLocation();
+  const pathMovies = location.pathname === '/movies';
+
+  const buttonSaveClassName = `filmcard__button ${
+    savedMovie ? 'filmcard__button_active' : 'filmcard__button_inactive'
+  }`;
+  const imageUrl = pathMovies
+    ? `${'https://api.nomoreparties.co'}${movie.image.url}`
+    : `${movie.image}`;
+  const movieName = movie.nameRU;
+  const movieDuration = () => {
+    const hours = Math.floor(movie.duration / 60);
+    const minutes = movie.duration % 60;
+    if (hours > 0) {
+      return `${hours}ч${minutes}м`;
+    } else {
+      return `${minutes}м`;
+    }
+  };
+
+  function toggleClick() {
+    if (savedMovie) {
+      deleteUserMovie(savedMovie);
+    } else {
+      saveUserMovie(movie);
+    }
   }
-  const { pathname } = useLocation();
+
+  function deleteClick() {
+    deleteUserMovie(movie);
+  }
+
   return (
     <li className='filmcard'>
-      <img src={filmImg} className='filmcard__image' alt={card.title} />
+      <a target='_blank' href={movie.trailerLink} rel='noreferrer'>
+        <img src={imageUrl} className='filmcard__image' alt={movieName} />
+      </a>
+
       <div className='filmcard__buttons'>
-        {pathname === '/saved-movies' ? (
-          <button type='button' className='filmcard__button filmcard__button_delete' />
+        {!pathMovies ? (
+          <button
+            type='submit'
+            className='filmcard__button filmcard__button_delete'
+            onClick={deleteClick}
+          />
         ) : (
           <button
             type='button'
-            className={`filmcard__button filmcard__button${like ? '_active' : '_inactive'
-              }`}
-            onClick={handleLikeToogle}
+            className={buttonSaveClassName}
+            onClick={toggleClick}
           />
         )}
       </div>
       <div className='filmcard__description'>
-        <h2 className='filmcard__title'>{card.title}</h2>
+        <h2 className='filmcard__title'>{movieName}</h2>
 
-        <p className='filmcard__duration'>{card.duration}</p>
+        <p className='filmcard__duration'>{movieDuration(movie.duration)}</p>
       </div>
     </li>
   );

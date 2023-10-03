@@ -1,25 +1,42 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useLocation } from 'react-router-dom';
-function MoviesCardList({ cards }) {
-  const location = useLocation();
+
+function MoviesCardList({
+  movies,
+  savedMovies,
+  count,
+  addMoreMovies,
+  saveUserMovie,
+
+  deleteUserMovie,
+}) {
+  const shownMovies = Array.isArray(movies) ? movies.slice(0, count) : [];
   return (
     <section className='cards'>
       <ul className='cards__list'>
-        {cards.map((card) => (
-          <MoviesCard key={card.id} card={card} />
+        {shownMovies.map((movie) => (
+          <MoviesCard
+            key={movie.id || movie._id}
+            movie={movie}
+            savedMovies={savedMovies}
+            saveUserMovie={saveUserMovie}
+            deleteUserMovie={deleteUserMovie}
+          />
         ))}
       </ul>
-
-      <div className='cards__button-container'>
-        <button
-          type='button'
-          className={`cards__button cards__button_${location.pathname === '/saved-movies' ? 'saved' : ''
-            }`}
-        >
-          Ещё
-        </button>
-      </div>
+      {movies.length > count ? (
+        <div className='cards__button-container'>
+          <button
+            type='submit'
+            className='cards__button'
+            onClick={addMoreMovies}
+          >
+            Ещё
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
     </section>
   );
 }
