@@ -8,7 +8,7 @@
 
 ***
 
-### [ПУЛЛ-РЕКВЕСТ]()
+### [ПУЛЛ-РЕКВЕСТ](https://github.com/jones876/movies-explorer-frontend/pull/2)
 
 ***
 
