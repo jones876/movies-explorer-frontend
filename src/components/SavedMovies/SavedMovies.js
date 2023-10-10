@@ -1,6 +1,5 @@
 import './SavedMovies.css';
 import React from 'react';
-import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import HeaderNav from '../HeaderNav/HeaderNav';
@@ -16,7 +15,6 @@ function SavedMovies({
   toggleCheckBox,
   searchSaved,
   changeSaved,
-  isLoad,
 }) {
   return (
     <main className='saved'>
@@ -28,9 +26,7 @@ function SavedMovies({
         toggleCheckBox={toggleCheckBox}
         checked={checked}
       />
-      {isLoad ? (
-        <Preloader />
-      ) : isFoundMovie ? (
+      {isFoundMovie ? (
         <MoviesCardList
           movies={checked ? shortMovies : savedMovies}
           savedMovies={savedMovies}

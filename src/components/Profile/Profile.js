@@ -98,12 +98,13 @@ function Profile({ onUpdateUser, signOut }) {
                 <input
                   className='profile__input'
                   type='text'
-                  placeholder={name}
+                  // placeholder={name}
                   name='name'
                   minLength='2'
                   maxLength='30'
                   id='name-input'
                   onChange={handleErrorName}
+                  value={name}
                   required
                 ></input>
                 <span className='register__error'>{errorName}</span>
@@ -112,12 +113,13 @@ function Profile({ onUpdateUser, signOut }) {
                 <input
                   className='profile__input'
                   type='email'
-                  placeholder={email}
+                  // placeholder={email}
                   name='email'
                   minLength='5'
                   maxLength='30'
                   id='email-input'
                   onChange={handleErrorEmail}
+                  value={email}
                   required
                 ></input>
                 <span className='register__error'>{errorEmail}</span>

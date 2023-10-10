@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import logo from '../../images/logo.svg';
-
 import './Register.css';
 
 function Register({ onRegister }) {
@@ -12,6 +10,7 @@ function Register({ onRegister }) {
     email: 'Некорректный email',
     minLength: 'Введите не менее 2 символов',
     maxLength: 'Введите не более 30 символов',
+    passwordLength: 'Пароль должен быть не меньше 8 символов',
   };
 
   const [name, setName] = useState('');
@@ -57,6 +56,8 @@ function Register({ onRegister }) {
     const inputPassword = e.target;
     if (inputPassword.value.length < 1) {
       setErrorPassword(errors.required);
+    } else if (inputPassword.value.length < 8) {
+      setErrorPassword(errors.passwordLength);
     } else {
       setErrorPassword('');
     }
@@ -78,7 +79,7 @@ function Register({ onRegister }) {
   }, [name, email, password, errorName, errorEmail, errorPassword]);
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) {
+    if (!name || !email || !password) {
       return;
     }
     onRegister({ email, name, password });

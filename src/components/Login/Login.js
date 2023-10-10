@@ -9,6 +9,7 @@ function Login({ onLogin }) {
     email: 'Некорректный email',
     minLength: 'Введите не менее 2 символов',
     maxLength: 'Введите не более 30 символов',
+    passwordLength: 'Пароль должен быть не меньше 8 символов',
   };
 
   const [formValid, setFormValid] = useState(false);
@@ -37,6 +38,8 @@ function Login({ onLogin }) {
     const inputPassword = e.target;
     if (inputPassword.value.length < 1) {
       setErrorPassword(errors.required);
+    } else if (inputPassword.value.length < 8) {
+      setErrorPassword(errors.passwordLength);
     } else {
       setErrorPassword('');
     }
@@ -96,7 +99,7 @@ function Login({ onLogin }) {
                 type='password'
                 placeholder='Пароль'
                 name='password'
-                minLength='4'
+                minLength='8'
                 maxLength='30'
                 id='password-input'
                 value={password}

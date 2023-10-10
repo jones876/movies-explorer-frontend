@@ -7,6 +7,20 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import HeaderNav from '../HeaderNav/HeaderNav';
 import Footer from '../Footer/Footer';
+import * as moviesApi from '../../utils/MoviesApi';
+import InfoTooltip from '../InfoTool/infoTool';
+import False from '../../images/False.svg';
+import {
+  PC_SCREEN_SIZE,
+  TABLET_SCREEN_SIZE,
+  PHONE_SCREEN_SIZE,
+  PC_ADD_CARDS,
+  TABLET_ADD_CARDS,
+  PC_START_CARDS,
+  TABLET_START_CARDS,
+  PHONE_START_CARDS,
+  SHORT_MOVIE_DURATION,
+} from '../../utils/constans';
 
 function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
   const width = useResize();
@@ -17,18 +31,20 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
   const [shortMovies, setShortMovies] = useState([]);
   const [isFoundMovie, setIsFoundMovie] = useState(true);
   const [count, setCount] = useState(12);
+  const [firstSearch, setFirstSearch] = useState(true);
+  const [isInfoTooltip, setIsInfoTooltip] = useState(false);
+  const [status, setStatus] = useState({});
 
   useEffect(() => {
     if (isLoad) {
       JSON.parse(localStorage.getItem('searchMovies'));
       searchMovie(searchQuery);
     }
-    setTimeout(() => setIsLoad(false), 1500);
+    setTimeout(() => setIsLoad(false), 500);
   }, [isLoad, allMovies, searchQuery, setFindMovies, searchMovie]);
-
   useEffect(() => {
     if (localStorage.getItem('searchMovies')) {
-      const movies = JSON.parse(localStorage.getItem('searchMovies'), []);
+      const movies = JSON.parse(localStorage.getItem('searchMovies'));
       setFindMovies(movies);
     }
   }, []);
@@ -48,40 +64,63 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
   }, []);
 
   useEffect(() => {
-    if (width >= 1280) {
-      setCount(12);
-    }
-
-    if (width < 1280 && width > 767) {
-      setCount(8);
-    }
-    if (width <= 767) {
-      setCount(5);
+    if (width >= PC_SCREEN_SIZE) {
+      setCount(PC_START_CARDS);
+    } else if (width < PC_SCREEN_SIZE && width > PHONE_SCREEN_SIZE) {
+      setCount(TABLET_START_CARDS);
+    } else if (width <= PHONE_SCREEN_SIZE) {
+      setCount(PHONE_START_CARDS);
     }
   }, [width]);
 
   useEffect(() => {
     if (checked) {
       const shortMovies = findMovies.filter((movie) => {
-        return movie.duration <= 40;
+        return movie.duration <= SHORT_MOVIE_DURATION;
       });
       setShortMovies(shortMovies);
     }
-  }, [checked, findMovies, setShortMovies]);
+  }, [checked, findMovies]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function searchMovie(query) {
-    const searchResults = allMovies.filter((movie) => {
-      const movieName = movie.nameRU.toLowerCase();
-      const movieNameEn = movie.nameEN.toLowerCase();
-      return (
-        movieName.includes(query.toLowerCase()) ||
-        movieNameEn.includes(query.toLowerCase())
-      );
-    });
-    if (searchResults.length < 1) {
-      setIsFoundMovie(false);
+    if (firstSearch) {
+      setIsLoad(true);
+      moviesApi
+        .getMovies()
+        .then((data) => {
+          localStorage.setItem('allMovies', JSON.stringify(data));
+          setFirstSearch(false);
+          const searchResults = data.filter((movie) => {
+            const movieName = movie.nameRU.toLowerCase();
+            const movieNameEn = movie.nameEN.toLowerCase();
+            return (
+              movieName.includes(query.toLowerCase()) ||
+              movieNameEn.includes(query.toLowerCase())
+            );
+          });
+          resetMovies();
+          setFindMovies(searchResults);
+          setIsFoundMovie(true);
+          localStorage.setItem('searchMovies', JSON.stringify(searchResults));
+        })
+        .catch(() => {
+          setIsInfoTooltip(true);
+          setStatus({
+            image: False,
+            text: 'Что-то пошло не так! Попробуйте ещё раз.',
+          });
+        });
     } else {
+      const searchResults = allMovies.filter((movie) => {
+        const movieName = movie.nameRU.toLowerCase();
+        const movieNameEn = movie.nameEN.toLowerCase();
+        return (
+          movieName.includes(query.toLowerCase()) ||
+          movieNameEn.includes(query.toLowerCase())
+        );
+      });
+      resetMovies();
       setFindMovies(searchResults);
       setIsFoundMovie(true);
       localStorage.setItem('searchMovies', JSON.stringify(searchResults));
@@ -102,17 +141,33 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
     setIsLoad(true);
   }
   function addMoreMovies() {
-    if (width >= 1280) {
-      setCount(count + 3);
-    } else if (width >= 990) {
-      setCount(count + 2);
-    } else if (width < 990) {
-      setCount(count + 2);
+    if (width >= PC_SCREEN_SIZE) {
+      setCount(count + PC_ADD_CARDS);
+    } else if (width >= TABLET_SCREEN_SIZE) {
+      setCount(count + TABLET_ADD_CARDS);
+    } else if (width < TABLET_SCREEN_SIZE) {
+      setCount(count + TABLET_ADD_CARDS);
     }
   }
-
+  function resetMovies() {
+    if (width >= PC_SCREEN_SIZE) {
+      setCount(PC_START_CARDS);
+    } else if (width < PC_SCREEN_SIZE && width > PHONE_SCREEN_SIZE) {
+      setCount(TABLET_START_CARDS);
+    } else if (width <= PHONE_SCREEN_SIZE) {
+      setCount(PHONE_START_CARDS);
+    }
+  }
+  function closeInfoTool() {
+    setIsInfoTooltip(false);
+  }
   return (
     <main className='movies'>
+      <InfoTooltip
+        isOpen={isInfoTooltip}
+        status={status}
+        onClose={closeInfoTool}
+      />
       <HeaderNav />
       <SearchForm
         handleSubmit={handleSubmit}
@@ -121,7 +176,7 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
         toggleCheckBox={toggleCheckBox}
         checked={checked}
       />
-      {isLoad ? (
+      {isLoad && firstSearch ? (
         <Preloader />
       ) : isFoundMovie ? (
         <MoviesCardList

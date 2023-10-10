@@ -19,13 +19,18 @@ import False from '../../images/False.svg';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
-import * as moviesApi from '../../utils/MoviesApi';
-
+import { useLocation } from 'react-router-dom';
+import { SHORT_MOVIE_DURATION } from '../../utils/constans';
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const [isRegister, setIsRegister] = useState(false);
+  const [isLogout, setIsLogout] = useState(false);
+
   const [isLoad, setIsLoad] = useState(false);
 
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
@@ -49,8 +54,7 @@ function App() {
       .then((data) => {
         if (data) {
           setLoggedIn(true);
-
-          navigate('/movies');
+          setCurrentUser(data);
         }
         return;
       })
@@ -78,7 +82,9 @@ function App() {
         localStorage.clear();
         setCurrentUser({});
         setLoggedIn(false);
+        setIsLogout(true);
         navigate('/');
+        setIsLoad(false);
       })
       .catch((err) => {
         console.log(err);
@@ -89,14 +95,15 @@ function App() {
     auth
       .register(user)
       .then(() => {
+        loginUser(user);
+        setLoggedIn(true);
+        setIsRegister(true);
+        navigate('/movies');
         setIsInfoTooltip(true);
         setStatus({
           image: True,
           text: 'Вы успешно зарегистрировались!',
         });
-        loginUser(user);
-        setLoggedIn(true);
-        navigate('/movies');
       })
       .catch(() => {
         setIsInfoTooltip(true);
@@ -160,11 +167,6 @@ function App() {
       .saveMovies(movie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
-        setIsInfoTooltip(true);
-        setStatus({
-          image: True,
-          text: 'Фильм успешно сохранен!',
-        });
       })
       .catch(() => {
         setIsInfoTooltip(true);
@@ -182,11 +184,6 @@ function App() {
       .then(() => {
         const filteredMovies = savedMovies.filter((i) => i._id !== movieId);
         setSavedMovies(filteredMovies);
-        setIsInfoTooltip(true);
-        setStatus({
-          image: True,
-          text: 'Фильм успешно удален!',
-        });
       })
       .catch(() => {
         setIsInfoTooltip(true);
@@ -202,26 +199,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (loggedIn) {
-      moviesApi
-        .getMovies()
-        .then((data) => {
-          localStorage.setItem('allMovies', JSON.stringify(data));
-          setAllMovies(data);
-          JSON.parse(localStorage.getItem('allMovies'));
-        })
-        .catch(() => {
-          setIsInfoTooltip(true);
-          setStatus({
-            image: False,
-            text: 'Что-то пошло не так! Попробуйте ещё раз.',
-          });
-        });
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && !isRegister && isLogout) {
       mainApi
         .getSavedMovies()
         .then((data) => {
@@ -237,7 +215,7 @@ function App() {
           });
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, isRegister, isLogout, location.pathname]);
 
   useEffect(() => {
     setSavedMovies(savedMovies);
@@ -246,7 +224,7 @@ function App() {
   useEffect(() => {
     if (checked) {
       const shortMovies = savedMovies.filter((movie) => {
-        return movie.duration <= 40;
+        return movie.duration <= SHORT_MOVIE_DURATION;
       });
       setShortMovies(shortMovies);
     }
@@ -255,20 +233,23 @@ function App() {
   useEffect(() => {
     if (isLoad) {
       if (savedMovies) {
-        const searchResults = savedMovies.filter((movie) => {
+        const results = savedMovies.filter((movie) => {
           const movieName = movie.nameRU.toLowerCase();
           return movieName.includes(searchQuery.toLowerCase());
         });
-        if (searchResults.length < 1) {
+        if (results.length < 1) {
           setIsFoundMovie(false);
         } else {
           setIsFoundMovie(true);
-          setSavedMovies(searchResults);
-          console.log(searchResults);
+          setSavedMovies(results);
         }
       }
+      return () => {
+        setIsLoad(false);
+
+        setSearchQuery('');
+      };
     }
-    setTimeout(() => setIsLoad(false), 1500);
   }, [isLoad, savedMovies, searchQuery]);
 
   function toggleCheckBox() {
