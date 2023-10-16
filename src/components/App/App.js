@@ -21,6 +21,7 @@ import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth';
 import { useLocation } from 'react-router-dom';
 import { SHORT_MOVIE_DURATION } from '../../utils/constans';
+import Preloader from '../Preloader/Preloader';
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,24 +47,22 @@ function App() {
   const [checked, setChecked] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isFoundMovie, setIsFoundMovie] = useState(true);
-
+  const [loading, setLoading] = useState(true);
   const checkToken = () => {
     const token = localStorage.getItem('jwt');
-    auth
+    return auth
       .getContent(token)
       .then((data) => {
         if (data) {
           setLoggedIn(true);
           setCurrentUser(data);
         }
-        return;
       })
       .catch(console.error);
   };
   useEffect(() => {
-    checkToken();
+    checkToken().finally(() => setLoading(false));
   }, []);
-
   function getUserInfo() {
     mainApi
       .getUserInfo()
@@ -75,11 +74,12 @@ function App() {
       });
   }
 
-  function signOut() {
+  const signOut = () => {
     auth
       .signout()
       .then((res) => {
         localStorage.clear();
+        localStorage.removeItem('savedMovies');
         setCurrentUser({});
         setLoggedIn(false);
         setIsLogout(true);
@@ -89,8 +89,12 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
-
+  };
+  useEffect(() => {
+    if (isLogout) {
+      localStorage.removeItem('savedMovies');
+    }
+  }, [isLogout]);
   const registerUser = (user) => {
     auth
       .register(user)
@@ -120,6 +124,7 @@ function App() {
       .login(user)
       .then(({ token }) => {
         if (token) {
+          localStorage.setItem('jwt', token);
           setLoggedIn(true);
           setCurrentUser(user);
           setIsInfoTooltip(true);
@@ -199,7 +204,12 @@ function App() {
   }
 
   useEffect(() => {
-    if (loggedIn && !isRegister && isLogout) {
+    if (
+      ((loggedIn || isRegister) &&
+        !isLogout &&
+        location.pathname === '/saved-movies') ||
+      location.pathname === '/movies'
+    ) {
       mainApi
         .getSavedMovies()
         .then((data) => {
@@ -233,15 +243,20 @@ function App() {
   useEffect(() => {
     if (isLoad) {
       if (savedMovies) {
-        const results = savedMovies.filter((movie) => {
-          const movieName = movie.nameRU.toLowerCase();
-          return movieName.includes(searchQuery.toLowerCase());
-        });
-        if (results.length < 1) {
-          setIsFoundMovie(false);
-        } else {
+        if (!searchQuery) {
           setIsFoundMovie(true);
-          setSavedMovies(results);
+          setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+        } else {
+          const results = savedMovies.filter((movie) => {
+            const movieName = movie.nameRU.toLowerCase();
+            return movieName.includes(searchQuery.toLowerCase());
+          });
+          if (results.length < 1) {
+            setIsFoundMovie(false);
+          } else {
+            setIsFoundMovie(true);
+            setSavedMovies(results);
+          }
         }
       }
       return () => {
@@ -265,6 +280,11 @@ function App() {
     setSearchQuery(e.target.value);
   }
 
+
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
@@ -280,7 +300,7 @@ function App() {
             path='/signup'
             element={
               loggedIn ? (
-                <Navigate to='/movies' />
+                <Navigate to='/movies' replace={true} />
               ) : (
                 <Register onRegister={registerUser} />
               )
@@ -290,7 +310,7 @@ function App() {
             path='/signin'
             element={
               loggedIn ? (
-                <Navigate to='/movies' />
+                <Navigate to='/movies' replace={true} />
               ) : (
                 <Login onLogin={loginUser} />
               )
@@ -312,20 +332,17 @@ function App() {
           <Route
             path='/movies'
             element={
-              <>
-                <ProtectedRouteElement
-                  loggedIn={loggedIn}
-                  allMovies={allMovies}
-                  isLoad={isLoad}
-                  savedMovies={savedMovies}
-                  saveUserMovie={saveUserMovie}
-                  deleteUserMovie={deleteUserMovie}
-                  element={Movies}
-                />
-              </>
+              <ProtectedRouteElement
+                loggedIn={loggedIn}
+                allMovies={allMovies}
+                isLoad={isLoad}
+                savedMovies={savedMovies}
+                saveUserMovie={saveUserMovie}
+                deleteUserMovie={deleteUserMovie}
+                element={Movies}
+              />
             }
           />
-
           <Route
             path='/saved-movies'
             element={

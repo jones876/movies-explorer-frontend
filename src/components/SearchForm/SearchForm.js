@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './SearchForm.css';
 
 import searchButton from '../../images/find-3.svg';

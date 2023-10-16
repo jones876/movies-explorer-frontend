@@ -69,7 +69,7 @@ function Register({ onRegister }) {
       email &&
       password &&
       !errorName &&
-      !errorName &&
+      !errorEmail &&
       !errorPassword
     ) {
       setFormValid(true);

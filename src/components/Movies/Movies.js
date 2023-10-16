@@ -36,12 +36,19 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
   const [status, setStatus] = useState({});
 
   useEffect(() => {
+    if (isLoad && allMovies) {
+      searchMovie(searchQuery);
+    }
+  }, [isLoad, allMovies, searchQuery]);
+
+  useEffect(() => {
     if (isLoad) {
       JSON.parse(localStorage.getItem('searchMovies'));
       searchMovie(searchQuery);
     }
     setTimeout(() => setIsLoad(false), 500);
   }, [isLoad, allMovies, searchQuery, setFindMovies, searchMovie]);
+
   useEffect(() => {
     if (localStorage.getItem('searchMovies')) {
       const movies = JSON.parse(localStorage.getItem('searchMovies'));
@@ -82,51 +89,6 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
     }
   }, [checked, findMovies]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function searchMovie(query) {
-    if (firstSearch) {
-      setIsLoad(true);
-      moviesApi
-        .getMovies()
-        .then((data) => {
-          localStorage.setItem('allMovies', JSON.stringify(data));
-          setFirstSearch(false);
-          const searchResults = data.filter((movie) => {
-            const movieName = movie.nameRU.toLowerCase();
-            const movieNameEn = movie.nameEN.toLowerCase();
-            return (
-              movieName.includes(query.toLowerCase()) ||
-              movieNameEn.includes(query.toLowerCase())
-            );
-          });
-          resetMovies();
-          setFindMovies(searchResults);
-          setIsFoundMovie(true);
-          localStorage.setItem('searchMovies', JSON.stringify(searchResults));
-        })
-        .catch(() => {
-          setIsInfoTooltip(true);
-          setStatus({
-            image: False,
-            text: 'Что-то пошло не так! Попробуйте ещё раз.',
-          });
-        });
-    } else {
-      const searchResults = allMovies.filter((movie) => {
-        const movieName = movie.nameRU.toLowerCase();
-        const movieNameEn = movie.nameEN.toLowerCase();
-        return (
-          movieName.includes(query.toLowerCase()) ||
-          movieNameEn.includes(query.toLowerCase())
-        );
-      });
-      resetMovies();
-      setFindMovies(searchResults);
-      setIsFoundMovie(true);
-      localStorage.setItem('searchMovies', JSON.stringify(searchResults));
-    }
-  }
-
   function handleChange(e) {
     setSearchQuery(e.target.value);
     localStorage.setItem('searchQuery', JSON.stringify(e.target.value));
@@ -160,6 +122,72 @@ function Movies({ allMovies, savedMovies, saveUserMovie, deleteUserMovie }) {
   }
   function closeInfoTool() {
     setIsInfoTooltip(false);
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function searchMovie(query) {
+    const allMovies = JSON.parse(localStorage.getItem('allMovies'));
+
+    if (firstSearch) {
+      setIsLoad(true);
+      moviesApi
+        .getMovies()
+        .then((data) => {
+          localStorage.setItem('allMovies', JSON.stringify(data));
+          setFirstSearch(false);
+          const searchResults = data.filter((movie) => {
+            const movieName = movie.nameRU.toLowerCase();
+            const movieNameEn = movie.nameEN.toLowerCase();
+            return (
+              movieName.includes(query.toLowerCase()) ||
+              movieNameEn.includes(query.toLowerCase())
+            );
+          });
+
+          if (searchResults.length < 1) {
+            setIsFoundMovie(false);
+          } else {
+            setIsFoundMovie(true);
+            setFindMovies(searchResults);
+          }
+          resetMovies();
+
+          localStorage.setItem('searchMovies', JSON.stringify(searchResults));
+          
+        })
+        .catch(() => {
+          setIsInfoTooltip(true);
+          setStatus({
+            image: False,
+            text: 'Что-то пошло не так! Попробуйте ещё раз.',
+          });
+        });
+    } else {
+      if (allMovies && allMovies.length > 0) {
+        const searchResults = allMovies.filter((movie) => {
+          const movieName = movie.nameRU.toLowerCase();
+          const movieNameEn = movie.nameEN.toLowerCase();
+          return (
+            movieName.includes(query.toLowerCase()) ||
+            movieNameEn.includes(query.toLowerCase())
+          );
+        });
+        if (searchResults.length < 1) {
+          setIsFoundMovie(false);
+        } else {
+          setIsFoundMovie(true);
+          setFindMovies(searchResults);
+        }
+        resetMovies();
+
+        localStorage.setItem('searchMovies', JSON.stringify(searchResults));
+      } else {
+        resetMovies();
+        setFindMovies([]);
+        setIsFoundMovie(false);
+        localStorage.setItem('searchMovies', JSON.stringify([]));
+      }
+    }
   }
   return (
     <main className='movies'>
