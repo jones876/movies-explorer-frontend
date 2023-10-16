@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:3000';
-// export const BASE_URL = 'https://api.jeka.movies-explorer.nomoredomainsicu.ru';
+// export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.jeka.movies-explorer.nomoredomainsicu.ru';
 const checkPromiseReturn = (res) => {
   if (res.ok) {
     return res.json();
