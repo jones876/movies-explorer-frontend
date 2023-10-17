@@ -18,8 +18,9 @@ function Popup() {
         <li>
           <Link
             to='/movies'
-            className={`popup__link ${location === '/movies' && 'popup__link_current'
-              }`}
+            className={`popup__link ${
+              location === '/movies' && 'popup__link_current'
+            }`}
             onClick={handleClick}
           >
             Фильмы
@@ -28,24 +29,26 @@ function Popup() {
         <li>
           <Link
             to='/saved-movies'
-            className={`popup__link ${location === '/saved-movies' && 'popup__link_current'
-              }`}
+            className={`popup__link ${
+              location === '/saved-movies' && 'popup__link_current'
+            }`}
             onClick={handleClick}
           >
             Сохранённые фильмы
           </Link>
         </li>
-        <li>
+        <li className='popup__profile-link'>
           <Link to='/profile' className='popup__link-btn' onClick={handleClick}>
             Аккаунт
           </Link>
         </li>
-
-
       </ul>
 
-
-      <button className='popup__btn-close' type='button' onClick={handleClick} />
+      <button
+        className='popup__btn-close'
+        type='button'
+        onClick={handleClick}
+      />
     </nav>
   );
 }

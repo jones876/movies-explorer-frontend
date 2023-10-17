@@ -27,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-margin-top: 0;
+  margin-top: 0;
   list-style-type: none;
   gap: 28px;
 }
@@ -89,7 +89,7 @@ margin-top: 0;
   top: 22px;
   right: 22px;
   background: #222;
-  background-image: url("../../images/Group.svg");
+  background-image: url('../../images/Group.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -107,12 +107,14 @@ margin-top: 0;
   opacity: 0.7;
   transition: opacity 0.5s ease-out;
 }
-
+.popup__profile-link{
+  margin-top: 300px;
+}
 .popup__link-btn {
   margin: 0;
   padding: 0;
   text-decoration: none;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -125,11 +127,11 @@ margin-top: 0;
   opacity: 1;
   transition: opacity 0.5s ease-out;
 
-  position: absolute;
+  /* position: absolute;
   top: 900px;
-  right: 210px;
+  right: 210px; */
 }
-.popup__link-btn:hover{
+.popup__link-btn:hover {
   opacity: 0.6;
   transition: opacity 0.5s ease-out;
 }

@@ -1,8 +1,89 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Register.css';
 
-function Register() {
+function Register({ onRegister }) {
+  const errors = {
+    required: 'Обязательно для заполнения',
+    name: 'Имя содержит недопустимые символы',
+    email: 'Некорректный email',
+    minLength: 'Введите не менее 2 символов',
+    maxLength: 'Введите не более 30 символов',
+    passwordLength: 'Пароль должен быть не меньше 8 символов',
+  };
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  const [errorName, setErrorName] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
+
+  function handleErrorEmail(e) {
+    const inputEmail = e.target;
+    const validEmail = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(
+      inputEmail.value
+    );
+    if (inputEmail.value.length < 1) {
+      setErrorEmail(errors.required);
+    } else if (!validEmail) {
+      setErrorEmail(errors.email);
+    } else {
+      setErrorEmail('');
+    }
+    setEmail(inputEmail.value);
+  }
+
+  function handleErrorName(e) {
+    const inputName = e.target;
+
+    if (inputName.value.length < 1) {
+      setErrorName(errors.required);
+    } else if (inputName.value.length < 2) {
+      setErrorName(errors.minLength);
+    } else if (inputName.value.length > 30) {
+      setErrorName(errors.maxLength);
+    } else {
+      setErrorName('');
+    }
+    setName(inputName.value);
+  }
+
+  function handleErrorPassword(e) {
+    const inputPassword = e.target;
+    if (inputPassword.value.length < 1) {
+      setErrorPassword(errors.required);
+    } else if (inputPassword.value.length < 8) {
+      setErrorPassword(errors.passwordLength);
+    } else {
+      setErrorPassword('');
+    }
+    setPassword(inputPassword.value);
+  }
+  useEffect(() => {
+    if (
+      name &&
+      email &&
+      password &&
+      !errorName &&
+      !errorEmail &&
+      !errorPassword
+    ) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  }, [name, email, password, errorName, errorEmail, errorPassword]);
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name || !email || !password) {
+      return;
+    }
+    onRegister({ email, name, password });
+  }
   return (
     <main className='register'>
       <div className='register__container'>
@@ -11,7 +92,12 @@ function Register() {
         </Link>
         <h1 className='register__title'>Добро пожаловать!</h1>
 
-        <form className='register__form' name='register'>
+        <form
+          className='register__form'
+          name='register'
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <fieldset className='register__form-fieldset'>
             <div className='register__input-container'>
               <label className='register__input-label'>Имя</label>
@@ -23,9 +109,11 @@ function Register() {
                 minLength='2'
                 maxLength='30'
                 id='name-input'
-                // defaultValuevalue='Евгений'
+                value={name}
+                onChange={handleErrorName}
                 required
               ></input>
+              <span className='register__error'>{errorName}</span>
             </div>
             <div className='register__input-container'>
               <label className='register__input-label'>E-mail</label>
@@ -37,9 +125,11 @@ function Register() {
                 minLength='5'
                 maxLength='30'
                 id='email-input'
-                // value='pochta@yandex.ru|'
+                value={email}
+                onChange={handleErrorEmail}
                 required
               ></input>
+              <span className='register__error'>{errorEmail}</span>
             </div>
             <div className='register__input-container'>
               <label className='register__input-label'>Пароль</label>
@@ -51,13 +141,21 @@ function Register() {
                 minLength='8'
                 maxLength='30'
                 id='password-input'
-                // value='111111111'
+                value={password}
+                onChange={handleErrorPassword}
                 required
               ></input>
+              <span className='register__error'>{errorPassword}</span>
             </div>
           </fieldset>
-          <span className='register__error'>Что-то пошло не так...</span>
-          <button className='register__button' type='submit'>
+
+          <button
+            type='submit'
+            className={`register__button ${
+              !formValid ? 'register__button_disabled' : ''
+            }`}
+            disabled={!formValid}
+          >
             Зарегистрироваться
           </button>
           <div className='register__wrap'>
